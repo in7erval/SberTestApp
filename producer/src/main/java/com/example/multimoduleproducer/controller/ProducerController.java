@@ -2,12 +2,11 @@ package com.example.multimoduleproducer.controller;
 
 import com.example.multimoduleproducer.feign.ConsumerClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.websocket.server.PathParam;
 
 @RestController
-@RequestMapping("/api/produce")
 public class ProducerController {
 
     private final ConsumerClient consumerClient;
@@ -17,9 +16,14 @@ public class ProducerController {
         this.consumerClient = consumerClient;
     }
 
-    @GetMapping
+    @GetMapping("/api/produce")
     public String produce() {
         return consumerClient.getData();
+    }
+
+    @GetMapping("/api/reverse")
+    public String reverseString(@RequestParam("s") String s) {
+        return consumerClient.reverseString(s);
     }
 
 }
